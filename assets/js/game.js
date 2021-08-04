@@ -15,6 +15,16 @@ var fightOrSkip = function() {
 if (promptFight === "" || promptFight === null) {
   window.alert("You need to provide a valid answer! Please try again.");
   return fightOrSkip();
+
+  // if yes (true), leave fight
+  if (confirmSkip) {
+    window.alert(playerInfo.name + " has decided to skip this fight. Goodbye!");
+    // subtract money from playerMoney for skipping, but don't let them go into the negative
+    playerInfo.money = Math.max(0, playerInfo.money - 10);
+
+    // return true if player wants to leave
+    return true;
+  }
 }
   // Enter the conditional recursive function call here!
 
@@ -90,7 +100,6 @@ while (playerInfo.health > 0 && enemy.health > 0) {
     } else {
       window.alert(playerInfo.name + ' still has ' + playerInfo.health + ' health left.');
     }
-  }
 };
 
 // function to start a new game
@@ -164,29 +173,22 @@ var shop = function() {
     'Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one "REFILL", "UPGRADE", or "LEAVE" to make a choice.'
   );
 
-  // use switch case to carry out action
-  switch (shopOptionPrompt) {
-    case 'REFILL':
-    case 'refill':
-      playerInfo.refillHealth();
-      break;
-    case 'UPGRADE':
-    case 'upgrade':
-      playerInfo.upgradeAttack();
-      break;
-    case 'LEAVE':
-    case 'leave':
-      window.alert('Leaving the store.');
-
-      // do nothing, so function will end
-      break;
-    default:
-      window.alert('You did not pick a valid option. Try again.');
-
-      // call shop() again to force player to pick a valid option
-      shop();
-      break;
-  }
+// use switch case to carry out action
+switch (shopOptionPrompt) {
+  case 1:
+    playerInfo.refillHealth();
+    break;
+  case 2:
+    playerInfo.upgradeAttack();
+    break;
+  case 3:
+    window.alert("Leaving the store.");
+    break;
+  default:
+    window.alert("You did not pick a valid option. Try again.");
+    shop();
+    break;
+}
 };
 
 /* END GAME FUNCTIONS */
